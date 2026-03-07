@@ -29,6 +29,17 @@ class TodoManager:
         """Save todos to file"""
         with open(self.filepath, 'w') as f:
             json.dump(self.todos, f, indent=2)
+    
+    def add_todo(self, title):
+        """Add a new todo"""
+        todo = {
+            "id": len(self.todos) + 1,
+            "title": title,
+            "completed": False
+        }
+        self.todos.append(todo)
+        self._save_todos()
+        return todo
 
 
 def main():
@@ -44,6 +55,13 @@ def main():
         if command == "exit":
             print("Goodbye!")
             break
+        elif command == "add":
+            title = input("Enter task title: ").strip()
+            if title:
+                todo = manager.add_todo(title)
+                print(f"✓ Added: {todo['title']} (ID: {todo['id']})")
+            else:
+                print("Task title cannot be empty")
         elif command == "help":
             print("Commands: add, list, complete, delete, exit")
         else:
