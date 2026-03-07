@@ -40,6 +40,10 @@ class TodoManager:
         self.todos.append(todo)
         self._save_todos()
         return todo
+    
+    def list_todos(self):
+        """Return all todos"""
+        return self.todos
 
 
 def main():
@@ -62,6 +66,16 @@ def main():
                 print(f"✓ Added: {todo['title']} (ID: {todo['id']})")
             else:
                 print("Task title cannot be empty")
+        elif command == "list":
+            todos = manager.list_todos()
+            if not todos:
+                print("No todos yet!")
+            else:
+                print("\n--- Your Todos ---")
+                for todo in todos:
+                    status = "✓" if todo["completed"] else "○"
+                    print(f"{status} [{todo['id']}] {todo['title']}")
+                print(f"Total: {len(todos)} tasks")
         elif command == "help":
             print("Commands: add, list, complete, delete, exit")
         else:
