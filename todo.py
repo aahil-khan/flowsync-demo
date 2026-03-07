@@ -44,6 +44,15 @@ class TodoManager:
     def list_todos(self):
         """Return all todos"""
         return self.todos
+    
+    def complete_todo(self, todo_id):
+        """Mark a todo as completed"""
+        for todo in self.todos:
+            if todo["id"] == todo_id:
+                todo["completed"] = True
+                self._save_todos()
+                return todo
+        return None
 
 
 def main():
@@ -76,6 +85,16 @@ def main():
                     status = "✓" if todo["completed"] else "○"
                     print(f"{status} [{todo['id']}] {todo['title']}")
                 print(f"Total: {len(todos)} tasks")
+        elif command == "complete":
+            try:
+                todo_id = int(input("Enter task ID to mark complete: "))
+                todo = manager.complete_todo(todo_id)
+                if todo:
+                    print(f"✓ Marked complete: {todo['title']}")
+                else:
+                    print("Task not found!")
+            except ValueError:
+                print("Invalid ID format")
         elif command == "help":
             print("Commands: add, list, complete, delete, exit")
         else:
