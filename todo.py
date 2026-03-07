@@ -53,6 +53,15 @@ class TodoManager:
                 self._save_todos()
                 return todo
         return None
+    
+    def delete_todo(self, todo_id):
+        """Delete a todo"""
+        for i, todo in enumerate(self.todos):
+            if todo["id"] == todo_id:
+                deleted = self.todos.pop(i)
+                self._save_todos()
+                return deleted
+        return None
 
 
 def main():
@@ -91,6 +100,16 @@ def main():
                 todo = manager.complete_todo(todo_id)
                 if todo:
                     print(f"✓ Marked complete: {todo['title']}")
+                else:
+                    print("Task not found!")
+            except ValueError:
+                print("Invalid ID format")
+        elif command == "delete":
+            try:
+                todo_id = int(input("Enter task ID to delete: "))
+                todo = manager.delete_todo(todo_id)
+                if todo:
+                    print(f"✓ Deleted: {todo['title']}")
                 else:
                     print("Task not found!")
             except ValueError:
