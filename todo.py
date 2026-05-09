@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
 Simple CLI Todo Manager
+
+A very cool one aswell
 """
 
 import os
